@@ -1,303 +1,378 @@
-<!DOCTYPE html> <html lang="zh-CN"> 
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8"> <meta 
-    name="viewport" 
-    content="width=device-width, 
-    initial-scale=1.0, 
-    maximum-scale=1.0, 
-    user-scalable=no"> 
-    <title>2025年高考查分倒计时</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025年高考查分倒计时</title>
     <style>
-        * { margin: 0; padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Microsoft 
-            YaHei', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
         }
         
-        body { background: 
-            linear-gradient(135deg, 
-            #1e5799, #2989d8, 
-            #207cca, #1e5799);
-            background-size: 400% 
-            400%; animation: 
-            gradientBG 15s ease 
-            infinite; color: white; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: 
-            center; padding: 20px; 
-            text-align: center; 
-            overflow-x: hidden;
-        }
-        
-        @keyframes gradientBG { 0% 
-            { background-position: 
-            0% 50%; } 50% { 
-            background-position: 
-            100% 50%; } 100% { 
-            background-position: 0% 
-            50%; }
-        }
-        
-        .container { max-width: 
-            500px; width: 100%; 
+        body {
+            background: linear-gradient(135deg, #1e5799, #2989d8, #207cca, #1e5799);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
         }
         
-        .header { margin-bottom: 
-            30px;
+        /* 心跳背景效果 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="rgba(255,50,50,0.05)" d="M100,36.2C84.2,18.6,40,16,40,59.5c0,25.3,40,73.5,60,100c20-26.5,60-74.7,60-100C160,16,115.8,18.6,100,36.2z"/></svg>');
+            background-size: 200px;
+            opacity: 0.3;
+            animation: heartbeat 1.2s infinite;
+            z-index: -1;
         }
         
-        .header h1 { font-size: 
-            32px; margin-bottom: 
-            10px; text-shadow: 0 
-            2px 4px 
-            rgba(0,0,0,0.3);
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .header p { font-size: 
-            18px; opacity: 0.9;
+        @keyframes heartbeat {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.05); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 0.3; }
         }
         
-        .countdown { display: flex; 
-            justify-content: 
-            center; flex-wrap: 
-            wrap; gap: 15px; 
+        .container {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
             margin-bottom: 40px;
         }
         
-        .countdown-item { 
-            background: rgba(255, 
-            255, 255, 0.15); 
-            backdrop-filter: 
-            blur(10px); 
-            border-radius: 15px; 
-            padding: 20px 10px; 
-            width: 22%; min-width: 
-            80px; box-shadow: 0 8px 
-            16px rgba(0,0,0,0.2); 
-            transition: transform 
-            0.3s ease;
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px 10px;
+            width: 22%;
+            min-width: 80px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
         
-        .countdown-item:hover { 
-            transform: 
-            translateY(-5px);
+        .countdown-item:hover {
+            transform: translateY(-5px);
         }
         
-        .countdown-number { 
-            font-size: 36px; 
-            font-weight: bold; 
-            margin-bottom: 5px; 
-            text-shadow: 0 2px 4px 
-            rgba(0,0,0,0.3);
+        .countdown-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 1s infinite;
         }
         
-        .countdown-label { 
-            font-size: 14px; 
+        /* 数字跳动效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); text-shadow: 0 0 10px #ff5555; }
+            100% { transform: scale(1); }
+        }
+        
+        .countdown-label {
+            font-size: 14px;
             opacity: 0.8;
         }
         
-        .target-date { background: 
-            rgba(255, 255, 255, 
-            0.2); border-radius: 
-            12px; padding: 15px; 
-            margin: 25px 0; 
-            font-size: 18px; 
-            backdrop-filter: 
-            blur(5px); box-shadow: 
-            0 4px 8px 
-            rgba(0,0,0,0.1);
+        .target-date {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px 0;
+            font-size: 18px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        .motivation { background: 
-            rgba(0, 0, 0, 0.2); 
-            border-radius: 12px; 
-            padding: 20px; margin: 
-            30px 0; min-height: 
-            100px; display: flex; 
-            flex-direction: column; 
-            justify-content: 
-            center; 
-            backdrop-filter: 
-            blur(5px); box-shadow: 
-            0 4px 12px 
-            rgba(0,0,0,0.2);
+        .motivation {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
         }
         
-        .motivation p { font-size: 
-            18px; font-style: 
-            italic; line-height: 
-            1.5; margin: 10px 0;
+        .motivation::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff3366, #ff9933, #ff3366);
+            background-size: 200% 200%;
+            animation: progressBar 8s linear infinite;
         }
         
-        .footer { margin-top: 20px; 
-            font-size: 14px; 
+        @keyframes progressBar {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .motivation p {
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
             opacity: 0.7;
         }
         
-        @media (max-width: 400px) { 
+        .emergency-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 50, 50, 0.9);
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: bold;
+            animation: blink 1s infinite;
+            display: none;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @media (max-width: 400px) {
             .countdown-item {
-                width: 45%; 
-                margin-bottom: 
-                10px;
+                width: 45%;
+                margin-bottom: 10px;
             }
             
-            .header h1 { font-size: 
-                28px;
+            .header h1 {
+                font-size: 28px;
             }
         }
-    </style> </head> <body> <div 
-    class="container">
-        <div class="header"> 
-            <h1>2025年高考查分倒计时</h1> 
+    </style>
+</head>
+<body>
+    <div class="emergency-alert" id="emergencyAlert">最后冲刺！时间紧迫！</div>
+    
+    <div class="container" id="container">
+        <div class="header">
+            <h1>2025年高考查分倒计时</h1>
             <p>努力终将获得回报</p>
         </div>
         
-        <div class="countdown"> 
-            <div 
-            class="countdown-item">
-                <div 
-                class="countdown-number" 
-                id="days">00</div> 
-                <div 
-                class="countdown-label">天</div>
-            </div> <div 
-            class="countdown-item">
-                <div 
-                class="countdown-number" 
-                id="hours">00</div> 
-                <div 
-                class="countdown-label">时</div>
-            </div> <div 
-            class="countdown-item">
-                <div 
-                class="countdown-number" 
-                id="minutes">00</div> 
-                <div 
-                class="countdown-label">分</div>
-            </div> <div 
-            class="countdown-item">
-                <div 
-                class="countdown-number" 
-                id="seconds">00</div> 
-                <div 
-                class="countdown-label">秒</div>
-            </div> </div>
-        
-        <div class="target-date"> 
-            目标时间：2025年6月25日 
-            13:00
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">天</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">时</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">分</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">秒</div>
+            </div>
         </div>
         
-        <div class="motivation"> <p 
-            id="motivation-text">每一次发奋努力的背后，必有加倍的赏赐。</p>
+        <div class="target-date">
+            目标时间：2025年6月25日 13:00
         </div>
         
-        <div class="footer"> 
+        <div class="motivation">
+            <p id="motivation-text">每一次发奋努力的背后，必有加倍的赏赐。</p>
+        </div>
+        
+        <div class="footer">
             <p>祝所有考生金榜题名，前程似锦！</p>
-        </div> </div>
+        </div>
+    </div>
     
+    <!-- 滴答音效（需用户交互后激活） -->
+    <audio id="tick-sound" preload="auto">
+        <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    </audio>
+
     <script>
-        // 目标时间：2025年6月25日 
-        // 13:00 (北京时间)
-        const targetDate = new 
-        Date('2025-06-25T13:00:00+08:00');
+        // 目标时间：2025年6月25日 13:00 (北京时间)
+        const targetDate = new Date('2025-06-25T13:00:00+08:00');
         
-        // 励志语录
+        // 紧张氛围语录
         const motivations = [ 
-            "每一次发奋努力的背后，必有加倍的赏赐。", 
-            "高考不是终点，而是新旅程的起点。", 
-            "十年寒窗磨一剑，今朝出鞘试锋芒。", 
-            "心之所向，素履以往；生如逆旅，一苇以航。", 
-            "青春由磨砺而出彩，人生因奋斗而升华。", 
-            "努力造就实力，态度决定高度。", 
-            "今天的努力，明天的实力。", 
-            "乾坤未定，你我皆是黑马！"
+            "最后冲刺！时间不等人！", 
+            "每分每秒都决定你的未来！", 
+            "坚持住！胜利就在前方！", 
+            "这是最后的战役，全力以赴！", 
+            "专注！现在分心等于放弃！", 
+            "考场如战场，此刻就是决战时刻！", 
+            "时间正在流逝，你的笔准备好了吗？", 
+            "最后的倒计时，拼尽全力不留遗憾！"
         ];
         
+        // 紧急状态标志
+        let emergencyActive = false;
+        
         // 更新倒计时
-        function updateCountdown() 
-        {
-            const now = new Date(); 
-            const diff = targetDate 
-            - now;
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
             
             // 如果时间已到
-            if (diff <= 0) { 
-                document.querySelector('.countdown').innerHTML 
-                = `
-                    <div 
-                    class="countdown-item" 
-                    style="width: 
-                    100%">
-                        <div 
-                        class="countdown-number">查分已开始！</div> 
-                        <div 
-                        class="countdown-label">祝所有考生金榜题名</div>
-                    </div> `; 
+            if (diff <= 0) {
+                document.querySelector('.countdown').innerHTML = `
+                    <div class="countdown-item" style="width: 100%">
+                        <div class="countdown-number">查分已开始！</div>
+                        <div class="countdown-label">祝所有考生金榜题名</div>
+                    </div>`;
                 return;
             }
             
             // 计算剩余时间
-            const days = 
-            Math.floor(diff / (1000 
-            * 60 * 60 * 24)); const 
-            hours = 
-            Math.floor((diff % 
-            (1000 * 60 * 60 * 24)) 
-            / (1000 * 60 * 60)); 
-            const minutes = 
-            Math.floor((diff % 
-            (1000 * 60 * 60)) / 
-            (1000 * 60)); const 
-            seconds = 
-            Math.floor((diff % 
-            (1000 * 60)) / 1000);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
             // 更新显示
-            document.getElementById('days').textContent 
-            = 
-            days.toString().padStart(2, 
-            '0'); 
-            document.getElementById('hours').textContent 
-            = 
-            hours.toString().padStart(2, 
-            '0'); 
-            document.getElementById('minutes').textContent 
-            = 
-            minutes.toString().padStart(2, 
-            '0'); 
-            document.getElementById('seconds').textContent 
-            = 
-            seconds.toString().padStart(2, 
-            '0');
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // 最后7天增强紧张氛围
+            if (days < 7 && !emergencyActive) {
+                activateEmergencyMode();
+            }
+            
+            // 最后1天特别效果
+            if (days === 0 && hours < 24 && !document.body.classList.contains('red-bg')) {
+                document.body.style.background = "linear-gradient(135deg, #b30000, #ff3333, #b30000)";
+                document.getElementById('container').style.animation = "shake 0.5s infinite";
+                document.getElementById('emergencyAlert').textContent = "最后24小时！全力以赴！";
+                document.body.classList.add('red-bg');
+            }
+            
+            // 最后10分钟倒计时音效
+            if (days === 0 && hours === 0 && minutes < 10) {
+                try {
+                    document.getElementById('tick-sound').currentTime = 0;
+                    document.getElementById('tick-sound').play();
+                } catch(e) { /* 静默处理自动播放限制 */ }
+            }
         }
         
-        // 更新励志语录
-        let currentMotivation = 0; 
-        function updateMotivation() 
-        {
-            document.getElementById('motivation-text').textContent 
-            = 
-            motivations[currentMotivation]; 
-            currentMotivation = 
-            (currentMotivation + 1) 
-            % motivations.length;
+        // 激活紧急状态
+        function activateEmergencyMode() {
+            emergencyActive = true;
+            document.getElementById('emergencyAlert').style.display = 'block';
+            document.body.style.animationDuration = '10s';
+            
+            // 添加闪烁元素
+            const blinkElement = document.createElement('div');
+            blinkElement.className = 'emergency-alert';
+            blinkElement.textContent = '最后一周！全力以赴！';
+            blinkElement.style.top = '60px';
+            document.body.appendChild(blinkElement);
+        }
+        
+        // 更新紧张语录
+        let currentMotivation = 0;
+        function updateMotivation() {
+            document.getElementById('motivation-text').textContent = motivations[currentMotivation];
+            currentMotivation = (currentMotivation + 1) % motivations.length;
+            
+            // 最后7天加快语录更新速度
+            if (emergencyActive) {
+                setTimeout(updateMotivation, 5000);
+            }
         }
         
         // 初始化
-        updateCountdown(); 
+        updateCountdown();
         updateMotivation();
         
         // 每秒更新一次倒计时
-        setInterval(updateCountdown, 
-        1000);
+        setInterval(updateCountdown, 1000);
         
-        // 每10秒更新一次励志语录
-        setInterval(updateMotivation, 
-        10000);
-    </script> </body>
+        // 每10秒更新一次紧张语录
+        setInterval(updateMotivation, 10000);
+        
+        // 处理音效交互
+        document.body.addEventListener('click', function() {
+            // 尝试播放一次音效以激活音频上下文
+            try {
+                document.getElementById('tick-sound').play().catch(() => {});
+            } catch(e) {}
+        });
+    </script>
+</body>
 </html>
